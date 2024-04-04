@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: library-system
+  datasource:
+    url: ${JDBC_DATASOURCE_URL:jdbc:postgresql://localhost:5432/librarysystem}
+    driver-class-name: org.postgresql.Driver
+    username: ${JDBC_DATASOURCE_USERNAME:postgres}
+    password: ${JDBC_DATASOURCE_PASSWORD:root}
+    jpa:
+      properties:
+        hibernate:
+          format_sql: true
+      database: postgresql
+      hibernate:
+        ddl-auto: update
+    sql:
+      init:
+        platform: postgres
+
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+
+server:
+  port: 8990
+
+
+
+
+
+jwt:
+  secret: ${JWT_SECRET:a6edd1525fc1bf5dee5f4c6b90594e8ec7876ec07d96bec141d9fe033c79fb87}
+  expirationTime: ${JWT_EXPIRATION_TIME:1209600000}
+  tokenPrefix: ${JWT_TOKEN_PREFIX:Bearer }
+  headerString: ${JWT_HEADER_STRING:Authorization}

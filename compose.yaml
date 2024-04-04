@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  libraryservice:
+    container_name: libraryservice
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      - JDBC_DATASOURCE_URL=jdbc:postgresql://postgres/librarysystem
+      - JDBC_DATASOURCE_USERNAME=myuser
+      - JDBC_DATASOURCE_PASSWORD=secret
+      - JWT_SECRET=a6edd1525fc1bf5dee5f4c6b90594e8ec7876ec07d96bec141d9fe033c79fb87
+      - JWT_EXPIRATION_TIME=1209600000
+      - JWT_TOKEN_PREFIX=Bearer
+      - JWT_HEADER_STRING=Authorization
+    ports:
+      - "8990:8990"
+
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=librarysystem'
+      - 'POSTGRES_PASSWORD=secret'
+      - 'POSTGRES_USER=myuser'
+    ports:
+      - '5432'
