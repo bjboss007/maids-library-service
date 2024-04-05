@@ -6,13 +6,13 @@ spring:
     driver-class-name: org.postgresql.Driver
     username: ${JDBC_DATASOURCE_USERNAME:postgres}
     password: ${JDBC_DATASOURCE_PASSWORD:root}
-    jpa:
-      properties:
-        hibernate:
-          format_sql: true
-      database: postgresql
+  jpa:
+    properties:
       hibernate:
-        ddl-auto: update
+        format_sql: true
+    database: postgresql
+    hibernate:
+      ddl-auto: ${SPRING_JPA_HIBERNATE_DDL_AUTO:update}
     sql:
       init:
         platform: postgres

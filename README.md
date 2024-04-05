@@ -53,7 +53,7 @@ To set up and run the application locally, follow these steps:
     ```
 
 5. **Access the application:**
-    - Open a web browser and go to: [http://localhost:8080](http://localhost:8080)
+    - Open a web browser and go to: [http://localhost:8990](http://localhost:8990)
 
 ### Using Docker Compose:
 
@@ -73,7 +73,7 @@ To set up and run the application locally, follow these steps:
     ```
 
 4. **Access the application:**
-    - Open a web browser and go to: [http://localhost:8080](http://localhost:8080)
+    - Open a web browser and go to: [http://localhost:8990](http://localhost:8990)
 
 ## API Endpoints
 

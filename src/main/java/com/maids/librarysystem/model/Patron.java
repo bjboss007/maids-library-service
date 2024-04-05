@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLRestriction;
 
 import javax.validation.constraints.NotBlank;
 
@@ -15,6 +16,7 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@SQLRestriction("deleted <> 'Y'")
 public class Patron extends BaseEntity {
     @NotBlank
     private String name;

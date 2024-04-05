@@ -7,14 +7,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLRestriction;
 
 import javax.validation.constraints.NotBlank;
 
-@Entity
+//@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@SQLRestriction("deleted <> 'Y'")
+@Entity
 public class Book extends BaseEntity {
 
     @NotBlank

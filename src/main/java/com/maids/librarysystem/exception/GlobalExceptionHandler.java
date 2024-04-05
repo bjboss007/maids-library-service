@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.Collections;
 import java.util.List;
@@ -111,6 +112,17 @@ public class GlobalExceptionHandler implements ErrorController {
     public ResponseEntity<ErrorResponse> handleError(MissingServletRequestParameterException e) {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .code(HttpStatus.BAD_REQUEST.value())
+                .message(e.getMessage())
+                .type(ErrorType.ERROR)
+                .errors(Collections.singletonList(e.getMessage()))
+                .build();
+        return ResponseEntity.badRequest().body(errorResponse);
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<ErrorResponse> handleError(NoResourceFoundException e) {
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .code(HttpStatus.NOT_FOUND.value())
                 .message(e.getMessage())
                 .type(ErrorType.ERROR)
                 .errors(Collections.singletonList(e.getMessage()))

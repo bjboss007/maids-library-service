@@ -9,7 +9,6 @@ import com.maids.librarysystem.repository.BookRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -24,9 +23,8 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final ModelMapper modelMapper;
-
-
     @Transactional
+    @CacheEvict(value = "books", allEntries = true)
     public Book addBook(BookDTO bookDTO){
         if (bookRepository.existsByIsbn(bookDTO.getIsbn())) {
             throw new LibraryApplicationException(HttpStatus.CONFLICT, "Book already exists with the isbn!");
@@ -38,7 +36,7 @@ public class BookService {
     @Cacheable(value = "books", key = "#id")
     public Book getBookById(Long id){
        return bookRepository.findById(id)
-                .orElseThrow(() -> new LibraryApplicationException(HttpStatus.NOT_FOUND, "Book with id "+ id + "not found!"));
+                .orElseThrow(() -> new LibraryApplicationException(HttpStatus.NOT_FOUND, "Book with id "+ id + " not found!"));
     }
 
 
@@ -54,7 +52,7 @@ public class BookService {
         return bookRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
-    @CachePut(key = "#id")
+    @CacheEvict(value = "books")
     public Book updateBook(Long id, BookUpdateDTO bookUpdateDTO){
         Book book = getBookById(id);
         modelMapper.map(bookUpdateDTO, book);

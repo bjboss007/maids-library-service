@@ -17,7 +17,7 @@ public class AppResponse <T> {
     private boolean status;
     private int code;
     private String message;
-    private T payload;
+    private T data;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Meta meta;
@@ -66,7 +66,7 @@ public class AppResponse <T> {
                 .status(true)
                 .code(200)
                 .message(message)
-                .payload(data)
+                .data(data)
                 .meta(meta)
                 .build());
     }
@@ -76,7 +76,7 @@ public class AppResponse <T> {
                 .status(true)
                 .code(statusCode.value())
                 .message(message)
-                .payload(data)
+                .data(data)
                 .meta(meta)
                 .build());
     }
@@ -107,7 +107,7 @@ public class AppResponse <T> {
                 "status=" + status +
                 ", code=" + code +
                 ", message='" + message + '\'' +
-                ", payload=" + payload +
+                ", payload=" + data +
                 ", meta=" + meta +
                 '}';
     }

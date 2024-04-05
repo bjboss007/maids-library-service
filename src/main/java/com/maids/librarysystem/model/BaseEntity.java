@@ -1,6 +1,7 @@
 package com.maids.librarysystem.model;
 
 
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -9,10 +10,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.SQLRestriction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @MappedSuperclass
@@ -20,19 +22,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-@SQLRestriction(value = "deleted <> 'false'")
-public abstract class BaseEntity {
+@EntityListeners(AuditingEntityListener.class)
+public abstract class BaseEntity implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private boolean deleted = false;
+    private String deleted = "N";
     @CreatedDate
-    private LocalDateTime createDate;
+    private LocalDateTime createdDate;
     @LastModifiedDate
-    private LocalDateTime updateDate;
+    private LocalDateTime updatedDate;
 
     public void deleteEntity(){
-        this.deleted = true;
+        this.deleted = "Y";
     }
 }

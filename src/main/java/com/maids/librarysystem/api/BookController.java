@@ -34,26 +34,26 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Book> getBookById(@PathVariable Long id) {
+    public ResponseEntity<AppResponse<Book>> getBookById(@PathVariable Long id) {
         Book book = bookService.getBookById(id);
-        return ResponseEntity.ok(book);
+        return AppResponse.build(book);
     }
 
     @PostMapping
-    public ResponseEntity<Book> addBook(@RequestBody @Valid BookDTO book) {
+    public ResponseEntity<AppResponse<Book>> addBook(@RequestBody @Valid BookDTO book) {
         Book savedBook = bookService.addBook(book);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedBook);
+        return AppResponse.build(HttpStatus.CREATED, savedBook);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody @Valid BookUpdateDTO bookDetails) {
+    public ResponseEntity<AppResponse<Book>> updateBook(@PathVariable Long id, @RequestBody @Valid BookUpdateDTO bookDetails) {
         Book updatedBook = bookService.updateBook(id, bookDetails);
-        return ResponseEntity.ok(updatedBook);
+        return AppResponse.build(updatedBook);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+    public ResponseEntity<AppResponse<String>> deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
-        return ResponseEntity.noContent().build();
+        return AppResponse.build("Book deleted successfully");
     }
 }

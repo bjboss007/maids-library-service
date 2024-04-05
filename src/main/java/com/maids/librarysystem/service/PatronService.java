@@ -9,7 +9,6 @@ import com.maids.librarysystem.repository.PatronRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -24,6 +23,7 @@ public class PatronService {
     private final PatronRepository patronRepository;
     private final ModelMapper modelMapper;
 
+    @CacheEvict(value = "patrons", allEntries = true)
     public Patron addPatron(PatronDTO patronDTO){
         Patron patron = modelMapper.map(patronDTO, Patron.class);
         boolean exists = patronRepository.existsByContactInformation(patronDTO.getContactInformation());
@@ -31,6 +31,7 @@ public class PatronService {
         return patronRepository.save(patron);
     }
 
+    @Cacheable(value = "patrons", key = "#id")
     public Patron getPatronById(Long id){
         return patronRepository.findById(id)
                 .orElseThrow(() -> new LibraryApplicationException(HttpStatus.NOT_FOUND, "Patron not found!"));
@@ -51,7 +52,7 @@ public class PatronService {
     }
 
 
-    @CachePut(value = "patrons", key = "#id")
+    @CacheEvict(value = "patrons")
     public Patron updatePatron(Long id, PatronUpdateDTO patronUpdateDTO){
         Patron patron = getPatronById(id);
         modelMapper.map(patronUpdateDTO, patron);
