@@ -26,6 +26,8 @@ public class PatronService {
 
     public Patron addPatron(PatronDTO patronDTO){
         Patron patron = modelMapper.map(patronDTO, Patron.class);
+        boolean exists = patronRepository.existsByContactInformation(patronDTO.getContactInformation());
+        if (exists) throw new LibraryApplicationException(HttpStatus.CONFLICT, "Patron with the contact info exists");
         return patronRepository.save(patron);
     }
 
