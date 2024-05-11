@@ -192,7 +192,6 @@ The application provides the following RESTful API endpoints:
 ## Security
 
 - **JWT-based Authorization:** Token-based authentication for securing API endpoints using JSON Web Tokens
-  In addition to protecting the main API endpoints, a security API endpoint `/api/auth/login` can be implemented for handling user authentication and token generation:
 
 - **Authentication Endpoint:**
     - `POST /api/auth/login`: Endpoint for user authentication and token generation
