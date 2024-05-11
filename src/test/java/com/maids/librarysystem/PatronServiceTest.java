@@ -41,8 +41,8 @@ public class PatronServiceTest {
 
     @Test
     public void testGetAllPatrons() {
-        List<Patron> patrons = Arrays.asList(new Patron(1L, "Patron 1", "Contact 1"),
-                new Patron(2L, "Patron 2", "Contact 2"));
+        List<Patron> patrons = Arrays.asList(new Patron(1L, "Foo bar", "foobar@gmail.com"),
+                new Patron(2L, "John Doe", "johnDoe@gmail.com"));
         Mockito.when(patronRepository.findAll(Sort.by(Sort.Direction.DESC, "id"))).thenReturn(patrons);
 
         List<Patron> result = patronService.getAllPatrons();
@@ -51,33 +51,33 @@ public class PatronServiceTest {
 
     @Test
     public void testGetPatronById() {
-        Patron patron = new Patron(1L, "Patron", "Contact");
+        Patron patron = new Patron(1L, "Foo Bar", "joe@gmail.com");
         Mockito.when(patronRepository.findById(1L)).thenReturn(Optional.of(patron));
 
         Patron result = patronService.getPatronById(1L);
 
         assertNotNull(result);
-        assertEquals("Patron", result.getName());
+        assertEquals("Foo Bar", result.getName());
     }
 
     @Test
     public void testSavePatron() {
 
-        PatronDTO patron = new PatronDTO("Patron", "Contact");
-        Patron patron1 = new Patron(1L, "Patron", "Contact");
+        PatronDTO patron = new PatronDTO("Joe Rogan", "joe@gmail.com");
+        Patron patron1 = new Patron(1L, "Joe Rogan", "joe@gmail.com");
         Mockito.when(patronRepository.save(Mockito.any())).thenReturn(patron1);
 
         Patron result = patronService.addPatron(patron);
 
         assertNotNull(result);
-        assertEquals("Patron", result.getName());
+        assertEquals("Joe Rogan", result.getName());
     }
 
     @Test
     public void testUpdatePatron() {
 
-        Patron existingPatron = new Patron(1L, "Patron", "Contact");
-        PatronUpdateDTO updatedPatron = new PatronUpdateDTO(1L, "New Patron", "New Contact");
+        Patron existingPatron = new Patron(1L, "Foo", "joe@gmail.com");
+        PatronUpdateDTO updatedPatron = new PatronUpdateDTO(1L, "Joe Foo", "joeFoo@gmail.com");
         Patron patron = modelMapper.map(updatedPatron, Patron.class);
         Mockito.when(patronRepository.findById(1L)).thenReturn(Optional.of(existingPatron));
         Mockito.when(patronRepository.save(existingPatron)).thenReturn(patron);
@@ -85,13 +85,13 @@ public class PatronServiceTest {
         Patron result = patronService.updatePatron(1L, updatedPatron);
 
         assertNotNull(result);
-        assertEquals("New Patron", result.getName());
+        assertEquals("Joe Foo", result.getName());
     }
 
     @Test
     public void testDeletePatron() {
 
-        Patron existingPatron = new Patron(1L, "Patron", "Contact");
+        Patron existingPatron = new Patron(1L, "John Kenney", "kennedy@gmail.com");
         Mockito.when(patronRepository.findById(1L)).thenReturn(Optional.of(existingPatron));
         patronService.deletePatron(1L);
         verify(patronRepository, times(1)).save(Mockito.any());
@@ -111,7 +111,7 @@ public class PatronServiceTest {
     @Test
     public void testUpdatePatronNotFound() {
 
-        PatronUpdateDTO patronDTO = new PatronUpdateDTO(111L, "Patron", "Contact");
+        PatronUpdateDTO patronDTO = new PatronUpdateDTO(111L, "John Wick", "johnwick@gmail.com");
         LibraryApplicationException exception = assertThrows(LibraryApplicationException.class, () -> {
             patronService.updatePatron(111L, patronDTO);
         });

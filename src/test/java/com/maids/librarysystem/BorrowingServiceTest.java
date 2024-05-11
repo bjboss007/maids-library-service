@@ -45,9 +45,9 @@ public class BorrowingServiceTest {
 
     @Test
     public void testBorrowBook() {
-        Book book = new Book("Title 1", "Author 1", 2022, "ISBN1");
+        Book book = new Book("Art of War", "Robert Green", 2022, "ISBN1");
         book.setId(1L);
-        Patron patron = new Patron("Patron 1", "Contact 1");
+        Patron patron = new Patron("John Wich", "johnwich@gmail.com");
         patron.setId(1L);
         BorrowingRecord borrowingRecord = new BorrowingRecord(book, patron, LocalDate.now(), null);
 
@@ -67,9 +67,9 @@ public class BorrowingServiceTest {
     @Test
     public void testReturnBook() {
 
-        Book book = new Book("Title 1", "Author 1", 2022, "ISBN1");
+        Book book = new Book("Art of War", "Robert Green", 2022, "ISBN1");
         book.setId(1L);
-        Patron patron = new Patron("Patron 1", "Contact 1");
+        Patron patron = new Patron("John Wich", "johnwich@gmail.com");
         patron.setId(1L);
         BorrowingRecord borrowingRecord = new BorrowingRecord(book, patron, LocalDate.now(), null);
 
@@ -85,7 +85,7 @@ public class BorrowingServiceTest {
 
     @Test
     public void testBorrowBookBookAlreadyBorrowed() {
-        Book book = new Book(1L, "Title", "Author", 2022, "ISBN");
+        Book book = new Book(1L, "Increase Your Financial IQ", "Robert T. Kiyosaki", 2022, "ISBN");
         Patron patron = new Patron(1L, "Patron", "Contact");
         Mockito.when(bookService.getBookById(1L)).thenReturn(book);
         Mockito.when(patronService.getPatronById(1L)).thenReturn(patron);
