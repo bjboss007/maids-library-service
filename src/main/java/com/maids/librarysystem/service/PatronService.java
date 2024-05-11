@@ -55,6 +55,8 @@ public class PatronService {
     @CacheEvict(value = "patrons")
     public Patron updatePatron(Long id, PatronUpdateDTO patronUpdateDTO){
         Patron patron = getPatronById(id);
+        boolean exists = patronRepository.existsByContactInformationAndIdNot(patronUpdateDTO.getContactInformation(), patron.getId());
+        if (exists) throw new LibraryApplicationException(HttpStatus.CONFLICT, "Patron with the contact info exists");
         modelMapper.map(patronUpdateDTO, patron);
         return patronRepository.save(patron);
     }

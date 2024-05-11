@@ -28,9 +28,9 @@ public class PatronController {
     private final PatronService patronService;
 
     @GetMapping
-    public ResponseEntity<List<Patron>> getAllPatrons() {
+    public ResponseEntity<AppResponse<List<Patron>>> getAllPatrons() {
         List<Patron> patrons = patronService.getAllPatrons();
-        return ResponseEntity.ok(patrons);
+        return AppResponse.build(patrons);
     }
 
     @GetMapping("/{id}")

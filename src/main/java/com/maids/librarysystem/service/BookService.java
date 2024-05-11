@@ -55,6 +55,9 @@ public class BookService {
     @CacheEvict(value = "books")
     public Book updateBook(Long id, BookUpdateDTO bookUpdateDTO){
         Book book = getBookById(id);
+        if (bookRepository.existsByIsbnAndIdNot(bookUpdateDTO.getIsbn(), book.getId())) {
+            throw new LibraryApplicationException(HttpStatus.CONFLICT, "Book already exists with the isbn!");
+        }
         modelMapper.map(bookUpdateDTO, book);
         return bookRepository.save(book);
     }
