@@ -18,13 +18,13 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class CustomAuthenticationException implements AuthenticationFailureHandler {
 
-    private final ObjectMapper objectMapper;
+
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception)
             throws IOException {
         response.setHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
-        response.getOutputStream().write(objectMapper.writeValueAsBytes(AppResponse.build(HttpStatus.UNAUTHORIZED, "Invalid or expired token")));
+        response.getOutputStream().write(new ObjectMapper().writeValueAsBytes(AppResponse.build(HttpStatus.UNAUTHORIZED, "Invalid or expired token")));
     }
 }

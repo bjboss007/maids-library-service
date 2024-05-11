@@ -86,15 +86,15 @@ The application provides the following RESTful API endpoints:
       [
           {
               "id": 1,
-              "title": "Book Title",
-              "author": "Author Name",
+              "title": "Rich Dad Poor Dad",
+              "author": "Robert T. Kiyosaki",
               "publicationYear": 2022,
               "isbn": "ISBN-12345"
           },
           {
               "id": 2,
-              "title": "Another Book Title",
-              "author": "Another Author Name",
+              "title": "Mastery",
+              "author": "Robert Green",
               "publicationYear": 2021,
               "isbn": "ISBN-67890"
           }
@@ -106,8 +106,8 @@ The application provides the following RESTful API endpoints:
       ```json
       {
           "id": 1,
-          "title": "Book Title",
-          "author": "Author Name",
+          "title": "Rich Dad Poor Dad",
+          "author": "Robert T. Kiyosaki",
           "publicationYear": 2022,
           "isbn": "ISBN-12345"
       }
@@ -117,8 +117,8 @@ The application provides the following RESTful API endpoints:
         - Sample Request Payload:
       ```json
       {
-          "title": "New Book Title",
-          "author": "New Author Name",
+          "title": "Seduction Volume 1",
+          "author": "Robert Green",
           "publicationYear": 2023,
           "isbn": "ISBN-54321"
       }
@@ -128,8 +128,8 @@ The application provides the following RESTful API endpoints:
         - Sample Request Payload:
       ```json
       {
-          "title": "Updated Book Title",
-          "author": "Updated Author Name",
+          "title": "Seduction Volume 1 edited",
+          "author": "Robert Green",
           "publicationYear": 2023,
           "isbn": "ISBN-54321"
       }
@@ -169,8 +169,8 @@ The application provides the following RESTful API endpoints:
         - Sample Request Payload:
       ```json
       {
-          "name": "New Patron",
-          "contactInformation": "newpatron@example.com"
+          "name": "Kennedy Marron",
+          "contactInformation": "kennedym@example.com"
       }
       ```
 
@@ -178,8 +178,8 @@ The application provides the following RESTful API endpoints:
         - Sample Request Payload:
       ```json
       {
-          "name": "Updated Patron",
-          "contactInformation": "updatedpatron@example.com"
+          "name": "Kennedy Marron",
+          "contactInformation": "kennedym@gmail.com"
       }
       ```
 

@@ -4,6 +4,7 @@ package com.maids.librarysystem.security;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -29,9 +30,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(csrf -> csrf.disable())
+                .exceptionHandling((httpSecurityExceptionHandlingConfigurer -> {
+
+                    httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+                    httpSecurityExceptionHandlingConfigurer.accessDeniedHandler(new CustomAccessDeniedHandler());
+                }))
                 .authorizeHttpRequests(authorize -> {
-                            authorize.requestMatchers("/api/auth/login").permitAll();
-                            authorize.anyRequest().authenticated();
+                            authorize.requestMatchers("/api/auth/login").permitAll()
+                                    .requestMatchers(HttpMethod.POST, "/api/books").authenticated()
+                                    .requestMatchers(HttpMethod.PUT, "/api/books/**").authenticated()
+                                    .requestMatchers(HttpMethod.DELETE, "/api/books/**").authenticated()
+                                    .requestMatchers(HttpMethod.POST, "/api/patrons").authenticated()
+                                    .requestMatchers(HttpMethod.PUT, "/api/patrons/**").authenticated()
+                                    .requestMatchers(HttpMethod.GET, "/**").permitAll();
                         }
                 ).authenticationProvider(authenticationProvider)
                 .addFilterBefore(new JwtAuthorizationFilter(userDetailService, jwtProperties), UsernamePasswordAuthenticationFilter.class).
